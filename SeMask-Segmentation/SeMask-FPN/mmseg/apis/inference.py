@@ -7,6 +7,8 @@ from mmcv.runner import load_checkpoint
 from mmseg.datasets.pipelines import Compose
 from mmseg.models import build_segmentor
 
+import numpy as np
+
 
 def init_segmentor(config, checkpoint=None, device='cuda:0'):
     """Initialize a segmentor from config file.
@@ -86,7 +88,7 @@ def inference_segmentor(model, img):
         data = scatter(data, [device])[0]
     else:
         data['img_metas'] = [i.data[0] for i in data['img_metas']]
-    print(data['img_metas'], data['img'].shape)
+    print(data['img_metas'], np.array(data['img']).shape)
     # forward the model
     with torch.no_grad():
         result = model(return_loss=False, rescale=True, **data)

@@ -86,7 +86,7 @@ def inference_segmentor(model, img):
         data = scatter(data, [device])[0]
     else:
         data['img_metas'] = [i.data[0] for i in data['img_metas']]
-
+    print(data['img_metas'], data['img'].shape)
     # forward the model
     with torch.no_grad():
         result = model(return_loss=False, rescale=True, **data)
